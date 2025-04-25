@@ -6,95 +6,125 @@ import Image from 'next/image';
 const testimonials = [
   {
     id: 1,
-    name: "Emily Johnson",
-    location: "New York, USA",
-    photo: "/images/testimonial-1.jpg",
-    text: "Our trip to Bali was absolutely magical! Everything was perfectly arranged, from the beautiful villa to the private tours. The local guides were knowledgeable and friendly, making our experience truly special.",
+    name: "Sarah Johnson",
+    location: "Manhattan, NY",
+    photo: "/images/client-1.jpg",
+    text: "Their eye for detail transformed our outdated living space into a stunning contemporary haven. The designers perfectly captured our style while introducing elements we would have never considered. Worth every penny!",
+    project: "Full Home Redesign",
     rating: 5
   },
   {
     id: 2,
-    name: "Michael Chen",
-    location: "Toronto, Canada",
-    photo: "/images/testimonial-2.jpg",
-    text: "The European tour exceeded all expectations. The itinerary was well-balanced between structured activities and free time to explore. The accommodations were superb and the transportation arrangements went smoothly.",
+    name: "Marcus Chen",
+    location: "Los Angeles, CA",
+    photo: "/images/client-2.jpg",
+    text: "As a restaurant owner, I needed a space that would stand out. Their commercial design team delivered beyond my expectations, creating an ambiance that customers constantly compliment. The increased foot traffic speaks for itself.",
+    project: "Restaurant Interior",
     rating: 5
   },
   {
     id: 3,
-    name: "Sarah Williams",
-    location: "London, UK",
-    photo: "/images/testimonial-3.jpg",
-    text: "Morocco was a dream come true! The desert camping experience under the stars was unforgettable. I appreciated the attention to detail and how the team handled every aspect of our journey.",
+    name: "Olivia Williams",
+    location: "Chicago, IL",
+    photo: "/images/client-3.jpg",
+    text: "Working with this team on my apartment renovation was a dream. They maximized my small space with clever storage solutions and a gorgeous color palette. My home finally feels both functional and sophisticated.",
+    project: "Apartment Renovation",
     rating: 4
   },
   {
     id: 4,
-    name: "David Rodriguez",
-    location: "Madrid, Spain",
-    photo: "/images/testimonial-4.jpg",
-    text: "The Thailand adventure package was perfect for our family. The kids loved the elephant sanctuary and we enjoyed the beautiful beaches. The travel coordinator was responsive and helpful throughout our trip.",
+    name: "James Rodriguez",
+    location: "Miami, FL",
+    photo: "/images/client-4.jpg",
+    text: "Our office redesign has completely transformed our company culture. The thoughtful ergonomic solutions and innovative use of space has improved workflow and employee satisfaction. Their commercial expertise is unmatched.",
+    project: "Corporate Office Design",
     rating: 5
   },
   {
     id: 5,
-    name: "Aisha Patel",
-    location: "Mumbai, India",
-    photo: "/images/testimonial-5.jpg",
-    text: "Japan in cherry blossom season was breathtaking! Our travel agent curated a perfect blend of traditional and modern experiences. The detailed itinerary with restaurant recommendations was incredibly helpful.",
+    name: "Priya Patel",
+    location: "Austin, TX",
+    photo: "/images/client-5.jpg",
+    text: "The premium package was worth every cent. From concept to completion, their attention to detail was impeccable. They sourced extraordinary statement pieces that make our home truly one-of-a-kind.",
+    project: "Luxury Home Styling",
     rating: 5
   }
 ];
 
 export default function Testimonials() {
   const [activeIndex, setActiveIndex] = useState(0);
+  const [isAnimating, setIsAnimating] = useState(false);
   
   // Auto-rotate testimonials
   useEffect(() => {
     const interval = setInterval(() => {
-      setActiveIndex((current) => (current + 1) % testimonials.length);
-    }, 5000);
+      if (!isAnimating) {
+        setIsAnimating(true);
+        setActiveIndex((current) => (current + 1) % testimonials.length);
+        setTimeout(() => setIsAnimating(false), 500);
+      }
+    }, 6000);
     
     return () => clearInterval(interval);
-  }, []);
+  }, [isAnimating]);
   
   const handleDotClick = (index) => {
-    setActiveIndex(index);
+    if (!isAnimating && index !== activeIndex) {
+      setIsAnimating(true);
+      setActiveIndex(index);
+      setTimeout(() => setIsAnimating(false), 500);
+    }
   };
   
   const handlePrevClick = () => {
-    setActiveIndex((current) => (current - 1 + testimonials.length) % testimonials.length);
+    if (!isAnimating) {
+      setIsAnimating(true);
+      setActiveIndex((current) => (current - 1 + testimonials.length) % testimonials.length);
+      setTimeout(() => setIsAnimating(false), 500);
+    }
   };
   
   const handleNextClick = () => {
-    setActiveIndex((current) => (current + 1) % testimonials.length);
+    if (!isAnimating) {
+      setIsAnimating(true);
+      setActiveIndex((current) => (current + 1) % testimonials.length);
+      setTimeout(() => setIsAnimating(false), 500);
+    }
   };
 
   return (
-    <section id="testimonials" className="py-20 bg-blue-900 text-white">
+    <section id="testimonials" className="py-24 bg-gradient-to-r from-stone-900 to-stone-800">
       <div className="container mx-auto px-4">
         <div className="text-center mb-16">
-          <h2 className="text-3xl md:text-4xl font-bold mb-4">What Our Travelers Say</h2>
-          <p className="text-blue-200 max-w-2xl mx-auto">
-            Discover the experiences of travelers who have explored the world with us.
+          <h2 className="text-3xl md:text-4xl font-bold mb-4">Client Testimonials</h2>
+          <p className="text-stone-400 max-w-2xl mx-auto">
+            See what our clients say about their transformation journey with our design team.
           </p>
-          <div className="w-24 h-1 bg-blue-400 mx-auto mt-4"></div>
+          <div className="w-24 h-1 bg-stone-500 mx-auto mt-4"></div>
         </div>
         
-        <div className="relative max-w-4xl mx-auto">
+        <div className="relative max-w-5xl mx-auto">
+          {/* Decorative Elements */}
+          <div className="absolute -top-10 -left-10 h-40 w-40 border-l-2 border-t-2 border-stone-700 hidden lg:block"></div>
+          <div className="absolute -bottom-10 -right-10 h-40 w-40 border-r-2 border-b-2 border-stone-700 hidden lg:block"></div>
+          
           {/* Testimonial Carousel */}
-          <div className="relative min-h-[400px] md:min-h-[300px]">
+          <div className="relative min-h-[400px] md:min-h-[320px]">
             {testimonials.map((testimonial, index) => (
               <div
                 key={testimonial.id}
-                className={`absolute w-full transition-opacity duration-500 ${
-                  index === activeIndex ? 'opacity-100 z-10' : 'opacity-0 z-0'
+                className={`absolute w-full transition-all duration-500 ${
+                  index === activeIndex 
+                    ? 'opacity-100 z-10 translate-x-0' 
+                    : index < activeIndex 
+                      ? 'opacity-0 z-0 -translate-x-full' 
+                      : 'opacity-0 z-0 translate-x-full'
                 }`}
                 style={{ display: index === activeIndex ? 'block' : 'none' }}
               >
-                <div className="bg-blue-800 rounded-lg p-8 shadow-xl">
-                  <div className="flex flex-col md:flex-row items-center mb-6">
-                    <div className="relative w-20 h-20 rounded-full overflow-hidden mb-4 md:mb-0 md:mr-6">
+                <div className="bg-stone-800 rounded-lg p-8 md:p-12 shadow-xl border border-stone-700">
+                  <div className="flex flex-col md:flex-row items-center mb-8">
+                    <div className="relative w-24 h-24 rounded-full overflow-hidden mb-4 md:mb-0 md:mr-8 border-2 border-stone-600">
                       <Image
                         src={testimonial.photo}
                         alt={testimonial.name}
@@ -104,14 +134,15 @@ export default function Testimonials() {
                     </div>
                     
                     <div>
-                      <h3 className="text-xl font-semibold">{testimonial.name}</h3>
-                      <p className="text-blue-200">{testimonial.location}</p>
-                      <div className="flex mt-1">
+                      <h3 className="text-2xl font-semibold text-stone-100">{testimonial.name}</h3>
+                      <p className="text-stone-400">{testimonial.location}</p>
+                      <p className="text-stone-500 text-sm mt-1">Project: {testimonial.project}</p>
+                      <div className="flex mt-2">
                         {[...Array(5)].map((_, i) => (
                           <svg
                             key={i}
                             xmlns="http://www.w3.org/2000/svg"
-                            className={`h-5 w-5 ${i < testimonial.rating ? 'text-yellow-400' : 'text-gray-400'}`}
+                            className={`h-5 w-5 ${i < testimonial.rating ? 'text-amber-400' : 'text-stone-600'}`}
                             fill="currentColor"
                             viewBox="0 0 20 20"
                           >
@@ -124,14 +155,14 @@ export default function Testimonials() {
                   
                   <div className="relative">
                     <svg
-                      className="absolute -top-4 -left-4 h-8 w-8 text-blue-500 opacity-50"
+                      className="absolute -top-4 -left-2 h-12 w-12 text-stone-700 opacity-50"
                       fill="currentColor"
                       viewBox="0 0 32 32"
                       aria-hidden="true"
                     >
                       <path d="M9.352 4C4.456 7.456 1 13.12 1 19.36c0 5.088 3.072 8.064 6.624 8.064 3.36 0 5.856-2.688 5.856-5.856 0-3.168-2.208-5.472-5.088-5.472-.576 0-1.344.096-1.536.192.48-3.264 3.552-7.104 6.624-9.024L9.352 4zm16.512 0c-4.8 3.456-8.256 9.12-8.256 15.36 0 5.088 3.072 8.064 6.624 8.064 3.264 0 5.856-2.688 5.856-5.856 0-3.168-2.304-5.472-5.184-5.472-.576 0-1.248.096-1.44.192.48-3.264 3.456-7.104 6.528-9.024L25.864 4z" />
                     </svg>
-                    <p className="text-lg text-blue-100 italic">
+                    <p className="text-lg md:text-xl text-stone-300 italic leading-relaxed">
                       "{testimonial.text}"
                     </p>
                   </div>
@@ -143,8 +174,9 @@ export default function Testimonials() {
           {/* Navigation Buttons */}
           <button
             onClick={handlePrevClick}
-            className="absolute top-1/2 -left-4 md:-left-12 transform -translate-y-1/2 bg-blue-700 hover:bg-blue-600 rounded-full p-2 focus:outline-none focus:ring-2 focus:ring-blue-400"
+            className="absolute top-1/2 -left-4 md:-left-6 transform -translate-y-1/2 bg-stone-800 hover:bg-stone-700 rounded-full p-2 focus:outline-none focus:ring-2 focus:ring-stone-500 border border-stone-700 shadow-lg transition-all duration-300"
             aria-label="Previous testimonial"
+            disabled={isAnimating}
           >
             <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
@@ -153,8 +185,9 @@ export default function Testimonials() {
           
           <button
             onClick={handleNextClick}
-            className="absolute top-1/2 -right-4 md:-right-12 transform -translate-y-1/2 bg-blue-700 hover:bg-blue-600 rounded-full p-2 focus:outline-none focus:ring-2 focus:ring-blue-400"
+            className="absolute top-1/2 -right-4 md:-right-6 transform -translate-y-1/2 bg-stone-800 hover:bg-stone-700 rounded-full p-2 focus:outline-none focus:ring-2 focus:ring-stone-500 border border-stone-700 shadow-lg transition-all duration-300"
             aria-label="Next testimonial"
+            disabled={isAnimating}
           >
             <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
@@ -163,17 +196,28 @@ export default function Testimonials() {
         </div>
         
         {/* Dots Navigation */}
-        <div className="flex justify-center mt-8">
+        <div className="flex justify-center mt-10">
           {testimonials.map((_, index) => (
             <button
               key={index}
               onClick={() => handleDotClick(index)}
-              className={`h-3 w-3 mx-1 rounded-full focus:outline-none ${
-                index === activeIndex ? 'bg-white' : 'bg-blue-400 hover:bg-blue-300'
+              className={`h-3 w-3 mx-1.5 rounded-full focus:outline-none transition-all duration-300 ${
+                index === activeIndex 
+                  ? 'bg-stone-300 w-6' 
+                  : 'bg-stone-600 hover:bg-stone-500'
               }`}
               aria-label={`Go to testimonial ${index + 1}`}
+              disabled={isAnimating}
             />
           ))}
+        </div>
+        
+        {/* Call to Action */}
+        <div className="text-center mt-16">
+          <p className="text-stone-400 mb-6 italic text-lg">Join our satisfied clients and transform your space today</p>
+          <a href="/portfolio" className="inline-block bg-stone-700 hover:bg-stone-600 text-stone-200 py-3 px-8 rounded-md font-medium transition duration-300 border border-stone-600">
+            View Our Portfolio
+          </a>
         </div>
       </div>
     </section>

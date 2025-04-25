@@ -147,8 +147,8 @@ export default function AboutUs() {
         
         {/* Philosophy Section */}
         <div className={`mt-20 transition-all duration-1000 delay-700 ${isVisible ? 'opacity-100' : 'opacity-0 translate-y-10'}`}>
-          <div className="bg-stone-600 rounded-xl shadow-lg p-10 relative overflow-hidden">
-            <div className="absolute top-0 right-0 w-1/3 h-full bg-stone-600/10 -skew-x-12 transform"></div>
+          <div className="bg-stone-700 rounded-xl shadow-lg p-10 relative overflow-hidden">
+            <div className="absolute top-0 right-0 w-1/3 h-full bg-stone-500/10 -skew-x-12 transform"></div>
             
             <div className="relative z-10">
               <h3 className="text-2xl md:text-3xl font-semibold mb-6 text-stone-100">Our Design Philosophy</h3>
